@@ -16,47 +16,48 @@ public class Prueba3ra {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("¡Bienvenido a la suite de juegos!");
+
+
+        public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido a los multiples juegos");
 
         System.out.println("¿Cuántos juegos deseas jugar?");
         int numJuegos = scanner.nextInt();
-        scanner.nextLine(); // Consumir el carácter de nueva línea restante
+        scanner.nextLine(); 
 
         Juego[] juegos = new Juego[numJuegos];
 
         for (int i = 0; i < numJuegos; i++) {
-            System.out.println("Configuración del Juego " + (i + 1));
-            int tamañoTablero = elegirTamañoTablero(scanner);
-            System.out.println("Introduce el nombre del Jugador 1 para este juego:");
-            String nombreJugador1 = scanner.nextLine();
-            System.out.println("Introduce el nombre del Jugador 2 para este juego:");
-            String nombreJugador2 = scanner.nextLine();
-            juegos[i] = new Juego(tamañoTablero, nombreJugador1, nombreJugador2);
-        }
+            System.out.println("Tres en raya o Juego a adivinar (1 = Tres en raya, 2 = Juego a adivinar)");
+            int decision = scanner.nextInt();
+            scanner.nextLine();
 
-        // Jugar todos los juegos simultáneamente
-        boolean juegosActivos = true;
-        while (juegosActivos) {
-            juegosActivos = false;
-            for (Juego juego : juegos) {
-                if (!juego.getJuegoTerminado()) {
-                    juegosActivos = true;
-                    juego.realizarTurno();
-                }
+            if (decision == 1) {
+                juegos[i] = new Juego3EnRaya();
+            } else if (decision == 2) {
+                juegos[i] = new JuegoAdivinarNumero();
+            } else {
+                System.out.println("Opción no válida. Elige de nuevo.");
+                i--;
             }
         }
-        System.out.println("¡Todos los juegos han terminado!");
-    }
-    public static int elegirTamañoTablero(Scanner scanner) {
-        int tamaño;
-        do {
-            System.out.println("Elige el tamaño del tablero (mínimo 3):");
-            tamaño = scanner.nextInt();
-            scanner.nextLine(); // Consumir el carácter de nueva línea restante
-        } while (tamaño < 3);
-        return tamaño;
-    }
 
+            for (int i = 0; i < numJuegos; i++) {
+            juegos[i].jugar();
+        }
+
+            System.out.println("Todos los juegos han terminado");
+        }
+
+        public static int elegirTamañoTablero(Scanner scanner) {
+            int tamaño;
+            do {
+                System.out.println("Elige el tamaño del tablero (mínimo 3):");
+                tamaño = scanner.nextInt();
+                scanner.nextLine();
+            } while (tamaño < 3);
+            return tamaño;
+        }
+    
 }
